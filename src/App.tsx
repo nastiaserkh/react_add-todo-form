@@ -42,7 +42,7 @@ export const App = () => {
     <div className="App">
       <h1>Add todo form</h1>
 
-      <AddTodoForm onSubmit={addTodo} />
+      <AddTodoForm onSubmit={addTodo} users={usersFromServer} />
       <TodoList todos={aggregateTodos} />
     </div>
   );

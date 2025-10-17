@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Nullable } from '../..//components/domain/Nullable';
-import usersFromServer from '../../api/users';
+// import usersFromServer from '../../api/users';
 import { Todo } from '../domain/Todo';
+import { Nullable } from '../domain/Nullable';
+import { User } from '../domain/User';
 
 type AddTodoFormProps = {
   onSubmit: (todo: Omit<Todo, 'id'>) => void;
+  users: User[];
 };
 
-export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
+export const AddTodoForm = ({ onSubmit, users }: AddTodoFormProps) => {
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState<Nullable<string>>(null);
 
@@ -79,6 +81,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
           value={title}
           onChange={handleTitleChange}
           placeholder="Enter a title"
+          id="titleInput"
         />
         {titleError && <span className="error">{titleError}</span>}
       </div>
@@ -89,11 +92,12 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
           data-cy="userSelect"
           value={userId}
           onChange={handleUserIdChange}
+          id="userSelect"
         >
           <option value={0} disabled>
             Choose a user
           </option>
-          {usersFromServer.map(user => (
+          {users.map(user => (
             <option key={user.id} value={user.id}>
               {user.name}
             </option>
