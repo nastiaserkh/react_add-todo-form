@@ -19,7 +19,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
 
     setTitle(newTitle);
 
-    if (titleError && newTitle.trim().length > 0) {
+    if (titleError) {
       setTitleError(null);
     }
   };
@@ -29,7 +29,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
 
     setUserId(newUserId);
 
-    if (userIdError && newUserId !== 0) {
+    if (userIdError) {
       setUserIdError(null);
     }
   };
@@ -72,6 +72,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
   return (
     <form action="/api/todos" method="POST" onSubmit={handleSubmit}>
       <div className="field">
+        <label htmlFor="titleInput">Title</label>
         <input
           type="text"
           data-cy="titleInput"
@@ -83,12 +84,13 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
       </div>
 
       <div className="field">
+        <label htmlFor="userSelect">User</label>
         <select
           data-cy="userSelect"
           value={userId}
           onChange={handleUserIdChange}
         >
-          <option value="0" disabled>
+          <option value={0} disabled>
             Choose a user
           </option>
           {usersFromServer.map(user => (

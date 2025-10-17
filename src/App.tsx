@@ -12,15 +12,19 @@ export const App = () => {
   const [todos, setTodos] = useState(todosFromServer);
 
   const addTodo = (newTodo: Omit<Todo, 'id'>) => {
-    const maxId = Math.max(...todos.map(todo => todo.id));
+    setTodos(currentTodos => {
+      const maxId = currentTodos.length
+        ? Math.max(...currentTodos.map(t => t.id))
+        : 0;
 
-    setTodos(currentTodos => [
-      ...currentTodos,
-      {
-        ...newTodo,
-        id: maxId + 1,
-      },
-    ]);
+      return [
+        ...currentTodos,
+        {
+          ...newTodo,
+          id: maxId + 1,
+        },
+      ];
+    });
   };
 
   const aggregateTodos = todos.map(todo => {
